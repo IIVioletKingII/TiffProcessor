@@ -1,0 +1,9 @@
+# Build folder
+build
+
+# Environment folder
+venv
+
+# Spoec files
+*.spec
+
