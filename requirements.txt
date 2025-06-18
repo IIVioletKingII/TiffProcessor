@@ -2,3 +2,6 @@ numpy==2.3.0
 opencv_python==4.11.0.86
 Pillow==11.2.1
 pyzbar==0.1.9
+pyinstaller
+tifffile
+imagecodecs

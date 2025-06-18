@@ -1,5 +1,6 @@
 # Build folder
 build
+dist
 
 # Environment folder
 venv
@@ -7,3 +8,5 @@ venv
 # Spoec files
 *.spec
 
+# Python Cache
+**/__pycache__
