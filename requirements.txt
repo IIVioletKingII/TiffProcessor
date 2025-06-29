@@ -5,3 +5,4 @@ pyzbar==0.1.9
 pyinstaller
 tifffile
 imagecodecs
+pdf2image

@@ -5,8 +5,11 @@ dist
 # Environment folder
 venv
 
-# Spoec files
-*.spec
+# Spec files
+# *.spec
 
 # Python Cache
 **/__pycache__
+
+poppler/*
+!poppler/.gitkeep
