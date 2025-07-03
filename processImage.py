@@ -96,12 +96,7 @@ def clean(input_path, output_path, find_qrcode=False):
 
 
 def convert(input_path):
-    # if getattr(sys, 'frozen', False):
-    #     base_path = sys._MEIPASS  # type: ignore[attr-defined]
-    # else:
-    #     base_path = os.path.dirname(__file__)
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(__file__))
-
     poppler_path = os.path.join(base_path, 'poppler', 'bin')
 
     images = convert_from_path(
@@ -113,7 +108,15 @@ def convert(input_path):
 
     # Save all pages as separate TIFFs or as a multipage TIFF
     for i, img in enumerate(images):
-        img.save(f'{base_name}_{i+1}.tif', format='TIFF')
+        # Convert PIL image to NumPy array
+        img_array = np.array(img.convert('RGB'))
+
+        # Save with LZW compression using tifffile
+        tifffile.imwrite(
+            f'{base_name}-{i+1}.tif',
+            img_array,
+            compression='lzw'
+        )
 
     return_result({
         "success": True,

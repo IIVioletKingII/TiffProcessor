@@ -1,4 +1,3 @@
-# -*- mode: python ; coding: utf-8 -*-
 import os
 
 # Collect pyzbar DLLs
@@ -40,45 +39,3 @@ binaries += [
     ('C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\Common7\\IDE\\msvcp140.dll', '.'),
     ('C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\Common7\\IDE\\concrt140.dll', '.'),
 ]
-
-a = Analysis(
-    ['processImage.py'],
-    pathex=[],
-    binaries=binaries,
-    datas=[],
-    hiddenimports=[],
-    hookspath=[],
-    hooksconfig={},
-    runtime_hooks=[],
-    excludes=[],
-    noarchive=False,
-    optimize=0,
-)
-pyz = PYZ(a.pure)
-
-exe = EXE(
-    pyz,
-    a.scripts,
-    [],
-    exclude_binaries=True,
-    name='processImage',
-    debug=False,
-    bootloader_ignore_signals=False,
-    strip=False,
-    upx=True,
-    console=True,
-    disable_windowed_traceback=False,
-    argv_emulation=False,
-    target_arch=None,
-    codesign_identity=None,
-    entitlements_file=None,
-)
-coll = COLLECT(
-    exe,
-    a.binaries,
-    a.datas,
-    strip=False,
-    upx=True,
-    upx_exclude=[],
-    name='ProcessImage_v1.4',
-)

@@ -3,7 +3,7 @@ build
 dist
 
 # Environment folder
-venv
+venv*
 
 # Spec files
 # *.spec
