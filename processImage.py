@@ -95,32 +95,45 @@ def clean(input_path, output_path, find_qrcode=False):
     })
 
 
-def convert(input_path):
+def threshold(value: int) -> int:
+    return 0 if value < 128 else 255
+
+
+def convert(input_path, output_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(__file__))
     poppler_path = os.path.join(base_path, 'poppler', 'bin')
 
+    # pdf pages
     images = convert_from_path(
         input_path,
-        dpi=300,
+        dpi=600,
         poppler_path=poppler_path
     )
-    base_name, _ = os.path.splitext(input_path)
+    num_images = len(images)
+
+    # base_name, _ = os.path.splitext(output_path)
+    base_name = (output_path.replace('.tiff', '')).replace('.tif', '')
+
+    if verbosity:
+        print(f'Base_name: {base_name}')
 
     # Save all pages as separate TIFFs or as a multipage TIFF
     for i, img in enumerate(images):
         # Convert PIL image to NumPy array
-        img_array = np.array(img.convert('RGB'))
+        # img_bw = img.convert('L').point(threshold, '1')
+        img_bw = img.convert('1')
+        # img_array = np.array(img_bw, dtype=np.uint8)
 
-        # Save with LZW compression using tifffile
-        tifffile.imwrite(
-            f'{base_name}-{i+1}.tif',
-            img_array,
-            compression='lzw'
+        count = f'-{i+1}' if num_images > 1 else ''
+        img_bw.save(
+            f'{base_name}{count}.tif',
+            compression='group4',
+            dpi=(600, 600)
         )
 
     return_result({
         "success": True,
-        "text": f'Converted {len(images)} pages.'
+        "text": f'Converted {num_images} pages.'
     })
 
 
@@ -152,9 +165,9 @@ def main():
     if function == 'clean' and len(sys.argv) >= 4:
         validate_path(input_path)
         clean(input_path, sys.argv[3], find_qrcode)
-    elif function == 'convert' and len(sys.argv) >= 3:
+    elif function == 'convert' and len(sys.argv) >= 4:
         validate_path(input_path)
-        convert(input_path)
+        convert(input_path, sys.argv[3])
     else:
         return_result({
             "success": False,

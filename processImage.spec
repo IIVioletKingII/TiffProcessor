@@ -80,5 +80,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='ProcessImage_v1.4',
+    name='ProcessImage_v1.5',
 )
